@@ -1,8 +1,10 @@
+var app = app || {};
+
 $(function() {
 
-    var rider = new Rider();
-    var listView = new RiderListView();
-    var riderModal = new RiderEditModal();
-    var riderUpdateModal = new RiderUpdateModal();
+    app.rider = new app.Rider();
+    app.listView = new app.RiderListView();
+    app.riderModal = new app.RiderAddModal();
+    app.riderUpdateModal = new app.RiderUpdateModal();
 
 });

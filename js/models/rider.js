@@ -1,4 +1,6 @@
-var Rider = Backbone.Model.extend({
+var app = app || {};
+
+app.Rider = Backbone.Model.extend({
     defaults: {
         firstName: '',
         lastName: '',

@@ -1,6 +1,6 @@
-var RiderEditModal = Backbone.View.extend({
-    model: rider,
+var app = app || {};
 
+app.RiderAddModal = Backbone.View.extend({
     el: '#rider-edit',
 
     events: {
@@ -14,8 +14,8 @@ var RiderEditModal = Backbone.View.extend({
             formData[el.id] = $(el).val();
         });
 
-        listView.collection.add(new Rider(formData));
+        app.listView.collection.add(new app.Rider(formData));
         this.$el.modal('hide');
-        listView.renderList();
+        app.listView.renderList();
     }
 });

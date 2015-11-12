@@ -1,6 +1,8 @@
-var RiderListView = Backbone.View.extend({
+var app = app || {};
+
+app.RiderListView = Backbone.View.extend({
     initialize: function() {
-        this.collection = new Riders(this.getRiders());
+        this.collection = new app.Riders(this.getRiders());
         this.listenTo(this.collection, 'add', this.renderList);
         this.listenTo(this.collection, 'add', this.saveRiders);
         this.listenTo(this.collection, 'change', this.saveRiders);
@@ -16,7 +18,7 @@ var RiderListView = Backbone.View.extend({
     template: _.template($('#list-template').html()),
 
     renderItem: function(item) {
-        var riderView = new RiderView({model: item});
+        var riderView = new app.RiderView({model: item});
         this.$el.append(riderView.render().el);
         return this;
     },
@@ -26,6 +28,7 @@ var RiderListView = Backbone.View.extend({
         this.collection.each(function(item) {
             this.renderItem(item);
         }, this);
+        return this;
     },
 
     saveRiders: function() {

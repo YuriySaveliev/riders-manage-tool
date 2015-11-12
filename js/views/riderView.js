@@ -1,4 +1,10 @@
-var RiderView = Backbone.View.extend({
+var app = app || {};
+
+app.RiderView = Backbone.View.extend({
+    initialize: function() {
+        this.$riderUpdate = $('#rider-update');
+    },
+
     events: {
         'click': 'openEditWindow'
     },
@@ -15,8 +21,8 @@ var RiderView = Backbone.View.extend({
     openEditWindow: function() {
         var self = this;
 
-        $('#rider-update').modal();
-        $('#rider-update').find('form input').each(function(i, el) {
+        self.$riderUpdate.modal();
+        self.$riderUpdate.find('form input').each(function(i, el) {
             $(el).val(self.model.get([el.id]));
         });
         Backbone.trigger('saveRider', self.model);

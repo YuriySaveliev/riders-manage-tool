@@ -1,4 +1,6 @@
-var RiderUpdateModal = Backbone.View.extend({
+var app = app || {};
+
+app.RiderUpdateModal = Backbone.View.extend({
     initialize: function() {
         this.listenTo(Backbone, 'saveRider', this.setModel);
     },
@@ -21,6 +23,6 @@ var RiderUpdateModal = Backbone.View.extend({
         });
         this.model.set(formData);
         this.$el.modal('hide');
-        listView.renderList();
+        app.listView.renderList();
     }
 });

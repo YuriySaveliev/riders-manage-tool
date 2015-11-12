@@ -1,3 +1,5 @@
-var Riders = Backbone.Collection.extend({
-    model: Rider
+var app = app || {};
+
+app.Riders = Backbone.Collection.extend({
+    model: app.Rider
 });
