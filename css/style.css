@@ -1,5 +1,6 @@
 body {
 	background-color: #abcdef;
+	background-image: url("../img/seamless_paper_texture.png");
 }
 .filter {
 	display: inline-block;
