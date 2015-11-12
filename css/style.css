@@ -1,0 +1,15 @@
+body {
+	background-color: #abcdef;
+}
+.filter {
+	display: inline-block;
+	width: 25%;
+}
+
+.controls {
+	margin-bottom: 20px;
+}
+
+.rider-container {
+	cursor: pointer;
+}
