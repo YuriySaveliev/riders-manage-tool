@@ -6,7 +6,8 @@ app.RiderView = Backbone.View.extend({
     },
 
     events: {
-        'click': 'openEditWindow'
+        'click .edit-btn': 'openEditWindow',
+        'click .remove-btn': 'removeRider'
     },
 
     className: 'rider-container col-lg-6 col-lg-offset-3',
@@ -18,7 +19,7 @@ app.RiderView = Backbone.View.extend({
         return this;
     },
 
-    openEditWindow: function() {
+    openEditWindow: function(e) {
         var self = this;
 
         self.$riderUpdate.modal();
@@ -26,5 +27,11 @@ app.RiderView = Backbone.View.extend({
             $(el).val(self.model.get([el.id]));
         });
         Backbone.trigger('saveRider', self.model);
+    },
+
+    removeRider: function() {
+        this.model.destroy();
+        this.remove();
+        app.listView.saveRiders();
     }
 });
