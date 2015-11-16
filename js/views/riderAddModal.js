@@ -12,6 +12,7 @@ app.RiderAddModal = Backbone.View.extend({
 
         this.$el.find('form input').each(function(i, el) {
             formData[el.id] = $(el).val();
+            $(el).val('');
         });
 
         app.listView.collection.add(new app.Rider(formData));

@@ -15,16 +15,14 @@ app.RiderListView = Backbone.View.extend({
         'change .form-control': 'filterRiders'
     },
 
-    template: _.template($('#list-template').html()),
-
     renderItem: function(item) {
         var riderView = new app.RiderView({model: item});
-        this.$el.append(riderView.render().el);
+        this.$el.find('#riders-list').append(riderView.render().el);
         return this;
     },
 
     renderList: function() {
-        this.$el.html(this.template());
+        this.$el.find('#riders-list').empty();
         this.collection.each(function(item) {
             this.renderItem(item);
         }, this);
@@ -50,7 +48,7 @@ app.RiderListView = Backbone.View.extend({
             this.renderList();
         } else {
             filteredList = self.collection.where({riderClass: filterValue});
-            this.$el.html(this.template());
+            this.$el.find('#riders-list').empty();
             $.each(filteredList, function(index, value) {
                 self.renderItem(value);
             }); 
