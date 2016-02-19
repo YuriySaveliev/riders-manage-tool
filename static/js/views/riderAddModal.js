@@ -15,7 +15,7 @@ app.RiderAddModal = Backbone.View.extend({
             $(el).val('');
         });
 
-        app.listView.collection.add(new app.Rider(formData));
+        app.listView.collection.create(formData);
         this.$el.modal('hide');
         app.listView.renderList();
     }

@@ -2,11 +2,12 @@ var app = app || {};
 
 app.RiderListView = Backbone.View.extend({
     initialize: function() {
-        this.collection = new app.Riders(this.getRiders());
-        this.listenTo(this.collection, 'add', this.renderList);
-        this.listenTo(this.collection, 'add', this.saveRiders);
-        this.listenTo(this.collection, 'change', this.saveRiders);
-        this.renderList();
+        this.collection = new app.Riders();
+        /*this.listenTo(this.collection, 'add', this.renderList);*/
+        this.listenTo(this.collection, 'sync', this.renderList);
+        //this.listenTo(this.collection, 'add', this.saveRiders);
+        //this.listenTo(this.collection, 'change', this.saveRiders);
+        this.collection.fetch({reset: true});
     },
 
     el: '#container',
@@ -30,13 +31,13 @@ app.RiderListView = Backbone.View.extend({
     },
 
     saveRiders: function() {
-        localStorage.setItem('ridersList', JSON.stringify(this.collection));
+        //localStorage.setItem('ridersList', JSON.stringify(this.collection));
     },
 
     getRiders: function() {
-        var rawListRiders = localStorage.getItem('ridersList');
+        /*var rawListRiders = localStorage.getItem('ridersList');
 
-        return JSON.parse(rawListRiders);
+        return JSON.parse(rawListRiders);*/
     },
 
     filterRiders: function(e) {

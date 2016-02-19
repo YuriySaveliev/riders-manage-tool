@@ -22,6 +22,7 @@ app.RiderUpdateModal = Backbone.View.extend({
             formData[el.id] = $(el).val();
         });
         this.model.set(formData);
+        this.model.save();
         this.$el.modal('hide');
         app.listView.renderList();
     }

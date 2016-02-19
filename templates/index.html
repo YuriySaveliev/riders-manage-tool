@@ -9,7 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="static/css/style.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -135,15 +135,15 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="static/js/lib/bootstrap.min.js"></script>
-    <script src="static/js/lib/underscore-min.js"></script>
-    <script src="static/js/lib/backbone-min.js"></script>
-    <script src="static/js/models/rider.js"></script>
-    <script src="static/js/collections/riders.js"></script>
-    <script src="static/js/views/riderView.js"></script>
-    <script src="static/js/views/riderListView.js"></script>
-    <script src="static/js/views/riderAddModal.js"></script>
-    <script src="static/js/views/riderUpdateModal.js"></script>
-    <script src="static/js/app.js"></script>
+    <script src="{{ url_for('static', filename='js/lib/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/lib/underscore-min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/lib/backbone-min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/models/rider.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/collections/riders.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/views/riderView.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/views/riderListView.js') }} "></script>
+    <script src="{{ url_for('static', filename='js/views/riderAddModal.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/views/riderUpdateModal.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
   </body>
 </html>
