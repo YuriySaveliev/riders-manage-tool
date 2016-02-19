@@ -1,9 +1,11 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, make_response
+from flask.ext.httpauth import HTTPBasicAuth
 import sqlite3
 
 DATABASE = 'riders.db'
 
 app = Flask(__name__)
+auth = HTTPBasicAuth()
 
 riders = [
     {   
@@ -35,11 +37,22 @@ riders = [
     }
 ]
 
+@auth.get_password
+def get_password(username):
+    if username == 'Yury':
+        return 'qwerty'
+    return None
+
+@auth.error_handler
+def unauthorized():
+    return make_response(jsonify({'error': 'Unauthorized access'}), 401)
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
 @app.route('/api/rmt/riders', methods=['GET'])
+@auth.login_required
 def get_riders():
     return jsonify({'riders': riders})
 

@@ -30,16 +30,6 @@ app.RiderListView = Backbone.View.extend({
         return this;
     },
 
-    saveRiders: function() {
-        //localStorage.setItem('ridersList', JSON.stringify(this.collection));
-    },
-
-    getRiders: function() {
-        /*var rawListRiders = localStorage.getItem('ridersList');
-
-        return JSON.parse(rawListRiders);*/
-    },
-
     filterRiders: function(e) {
         var filterValue = e.currentTarget.value,
             filteredList = [],
