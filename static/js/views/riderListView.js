@@ -3,10 +3,7 @@ var app = app || {};
 app.RiderListView = Backbone.View.extend({
     initialize: function() {
         this.collection = new app.Riders();
-        /*this.listenTo(this.collection, 'add', this.renderList);*/
         this.listenTo(this.collection, 'sync', this.renderList);
-        //this.listenTo(this.collection, 'add', this.saveRiders);
-        //this.listenTo(this.collection, 'change', this.saveRiders);
         this.collection.fetch({reset: true});
     },
 

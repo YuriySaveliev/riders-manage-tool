@@ -7,6 +7,6 @@ app.Rider = Backbone.Model.extend({
         riderClass: 0,
         brand: 'None',
         size: 0,
-        number: 0
+        numberRider: 0
     }
 });

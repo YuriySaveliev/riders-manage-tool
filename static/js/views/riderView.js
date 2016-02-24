@@ -30,8 +30,8 @@ app.RiderView = Backbone.View.extend({
     },
 
     removeRider: function() {
+        //app.listView.saveRiders();
         this.model.destroy();
         this.remove();
-        app.listView.saveRiders();
     }
 });
