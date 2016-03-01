@@ -48,9 +48,35 @@ def get_password(username):
 def unauthorized():
     return make_response(jsonify({'error': 'Unauthorized access'}), 401)'''
 
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect(url_for('login'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['login'] != 'Vasya':
+            error = 'Invalid username'
+        elif request.form['password'] != '1111':
+            error = 'Invalid password'
+        else:
+            session['logged_in'] = True
+            return redirect(url_for('main'))
+    return render_template('login.html', error=error)
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('login'))
+
+@app.route('/index')
+def main():
+    return render_template('main.html')
 
 @app.route('/api/rmt/riders', methods=['GET'])
 #@auth.login_required
@@ -59,26 +85,34 @@ def get_riders():
     riders = [dict(id=row[0], firstName=row[1], lastName=row[2], size=row[3], brand=row[4], riderClass=row[5], numberRider=row[6]) for row in cur.fetchall()]
     return jsonify({'riders': riders})
 
-#@app.route('/api/rmt/riders/<int:rider_id>', methods=['GET'])
-#def get_rider(rider_id):
-#    rider = [rider for rider in riders if rider['id'] == rider_id]
-#    return jsonify({'rider': rider})
+@app.route('/api/rmt/riders/<int:rider_id>', methods=['GET'])
+def get_rider(rider_id):
+    cur = g.db.execute('select id, firstName, lastName, size, brand, riderClass, numberRider from riders where id=' + str(rider_id))
+    rider =  cur.fetchall()
+    if len(rider) == 0:
+        abort(404)
+    rider = dict(id=rider[0][0], firstName=rider[0][1], lastName=rider[0][2], size=rider[0][3], brand=rider[0][4], riderClass=rider[0][5], numberRider=rider[0][6])
+    return jsonify({'rider': rider})
 
 @app.route('/api/rmt/riders/<int:rider_id>', methods=['DELETE'])
 def remove_rider(rider_id):
+    cur = g.db.execute('select id, firstName, lastName, size, brand, riderClass, numberRider from riders where id=' + str(rider_id))
+    if len(cur.fetchall()) == 0:
+        abort(404)
     cur = g.db.execute('delete from riders where id=' + str(rider_id))
     g.db.commit()
     return jsonify({'result': True})
 
 @app.route('/api/rmt/riders', methods=['POST'])
 def post_rider():
+    if not request.json:
+        abort(400)
     content = request.get_json(force=True)
     #if not session.get('logged_in'):
     #    abort(401)
-    g.db.execute('insert into riders (firstName, lastName, size, brand, riderClass, numberRider) values (?, ?, ?, ?, ?, ?)', [content['firstName'], content['lastName'], content['size'], content['brand'], content['riderClass'], content['numberRider']])
+    g.db.execute('insert into riders (firstName, lastName, size, brand, riderClass, numberRider) values (?, ?, ?, ?, ?, ?)', 
+                [content['firstName'], content['lastName'], content['size'], content['brand'], content['riderClass'], content['numberRider']])
     g.db.commit()
-    #flash('New entry was successfully posted')
-    #return redirect(url_for('show_entries'))
     
     rider = {
         'firstName': content['firstName'],
@@ -92,10 +126,15 @@ def post_rider():
 
 @app.route('/api/rmt/riders/<int:rider_id>', methods=['PUT'])
 def update_rider(rider_id):
+    if not request.json:
+        abort(400)
     rider = {}
     content = request.get_json(force=True)
-    print content
-    cur = g.db.execute('update riders set firstName=?, lastName=?, size=?, brand=?, riderClass=?, numberRider=? where id=?', [content['firstName'], content['lastName'], content['size'], content['brand'], content['riderClass'], content['numberRider'], str(rider_id)])
+    cur = g.db.execute('select id, firstName, lastName, size, brand, riderClass, numberRider from riders where id=' + str(rider_id))
+    if len(cur.fetchall()) == 0:
+        abort(404)
+    cur = g.db.execute('update riders set firstName=?, lastName=?, size=?, brand=?, riderClass=?, numberRider=? where id=?', 
+                    [content['firstName'], content['lastName'], content['size'], content['brand'], content['riderClass'], content['numberRider'], str(rider_id)])
     g.db.commit()
     rider['firstName'] = content['firstName']
     rider['lastName'] = content['lastName']
@@ -106,4 +145,4 @@ def update_rider(rider_id):
     return jsonify({'rider': rider})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
